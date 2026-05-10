@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: savora-backend
+    runtime: python
+    rootDir: backend
+
+    # FIX 1: Added ffmpeg install — WITHOUT this, MP3 and 1080p merging are BROKEN
+    # FIX 2: Added rootDir: backend — without this Render can't find requirements.txt
+    buildCommand: apt-get install -y ffmpeg && pip install -r requirements.txt
+
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
